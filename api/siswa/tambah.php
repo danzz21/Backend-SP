@@ -1,14 +1,9 @@
 <?php
 session_start();
 
-// ================= HEADERS ================= //
-header("Content-Type: application/json");
-
-// GANTI jika frontend beda domain
-header("Access-Control-Allow-Origin: http://localhost");
-
-// hanya izinkan POST
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Origin: https://emakh.netlify.app");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
 
 // ================= AUTH ================= //
 if (!isset($_SESSION['login'])) {
@@ -36,9 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-header("Access-Control-Allow-Origin: https://emahk.netlify.app");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Content-Type");
+
 // ================= DATABASE ================= //
 include "../../config/koneksi.php";
 
@@ -147,6 +140,9 @@ if ($stmt->execute()) {
 
     echo json_encode([
         "status" => "error",
-        "message" => "Gagal menambahkan data"
+        "message" => "Gagal menghapus data"
     ]);
 }
+
+$stmt->close();
+$conn->close();

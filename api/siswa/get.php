@@ -1,29 +1,15 @@
 <?php
+
+// ================= SESSION ================= //
 session_start();
 
 // ================= HEADERS ================= //
 header("Content-Type: application/json");
 
-// GANTI kalau frontend lu beda domain/port
-header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Origin: https://emakh.netlify.app");
 
-// hanya izinkan GET
-header("Access-Control-Allow-Methods: GET");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 
-// ================= AUTH ================= //
-if (!isset($_SESSION['login'])) {
-
-    http_response_code(401);
-
-    echo json_encode([
-        "status" => "error",
-        "message" => "Unauthorized"
-    ]);
-
-    exit;
-}
-header("Access-Control-Allow-Origin: https://emahk.netlify.app");
-header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type");
 
 // ================= DATABASE ================= //
@@ -45,7 +31,7 @@ if (!$query) {
 
     echo json_encode([
         "status" => "error",
-        "message" => "Database error"
+        "message" => mysqli_error($conn)
     ]);
 
     exit;

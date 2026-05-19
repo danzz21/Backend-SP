@@ -1,30 +1,26 @@
 <?php
+
+// ================= SESSION ================= //
 session_start();
 
 // ================= HEADERS ================= //
 header("Content-Type: application/json");
 
-// GANTI jika frontend beda domain
-header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Origin: https://emakh.netlify.app");
 
-// hanya izinkan POST
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 
-// ================= AUTH ================= //
-if (!isset($_SESSION['login'])) {
+header("Access-Control-Allow-Headers: Content-Type");
 
-    http_response_code(401);
-
-    echo json_encode([
-        "status" => "error",
-        "message" => "Unauthorized"
-    ]);
-
+// HANDLE PREFLIGHT
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
     exit;
 }
-header("Access-Control-Allow-Origin: https://emahk.netlify.app");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Content-Type");
+
+// ================= DATABASE ================= //
+include "../../config/koneksi.php";
+
 // ================= METHOD CHECK ================= //
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
@@ -37,9 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
     exit;
 }
-
-// ================= DATABASE ================= //
-include "../../config/koneksi.php";
 
 // ================= AMBIL INPUT ================= //
 $id    = $_POST['id'] ?? null;
@@ -126,7 +119,7 @@ if (!preg_match("/^[a-zA-Z\s]+$/", $nama)) {
     exit;
 }
 
-// ================= CEK DATA SISWA ================= //
+// ================= CEK SISWA ================= //
 $cekSiswa = $conn->prepare("
     SELECT id_siswa
     FROM siswa
@@ -212,3 +205,6 @@ if ($stmt->execute()) {
         "message" => "Gagal update data"
     ]);
 }
+
+$stmt->close();
+$conn->close();

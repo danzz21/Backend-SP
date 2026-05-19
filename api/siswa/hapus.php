@@ -1,31 +1,26 @@
 <?php
+
+// ================= SESSION ================= //
 session_start();
 
 // ================= HEADERS ================= //
 header("Content-Type: application/json");
 
-// GANTI kalau frontend beda domain
-header("Access-Control-Allow-Origin: http://localhost");
+header("Access-Control-Allow-Origin: https://emakh.netlify.app");
 
-// hanya izinkan POST
-header("Access-Control-Allow-Methods: POST");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 
-// ================= AUTH ================= //
-if (!isset($_SESSION['login'])) {
+header("Access-Control-Allow-Headers: Content-Type");
 
-    http_response_code(401);
-
-    echo json_encode([
-        "status" => "error",
-        "message" => "Unauthorized"
-    ]);
-
+// HANDLE PREFLIGHT
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
     exit;
 }
 
-header("Access-Control-Allow-Origin: https://emahk.netlify.app");
-header("Access-Control-Allow-Credentials: true");
-header("Access-Control-Allow-Headers: Content-Type");
+// ================= DATABASE ================= //
+include "../../config/koneksi.php";
+
 // ================= METHOD CHECK ================= //
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
@@ -38,9 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
     exit;
 }
-
-// ================= DATABASE ================= //
-include "../../config/koneksi.php";
 
 // ================= AMBIL ID ================= //
 $id = $_POST['id'] ?? null;
@@ -58,7 +50,6 @@ if (!$id) {
     exit;
 }
 
-// hanya angka
 if (!is_numeric($id)) {
 
     http_response_code(400);
@@ -82,7 +73,6 @@ $stmt->bind_param("i", $id);
 // ================= EKSEKUSI ================= //
 if ($stmt->execute()) {
 
-    // cek apakah ada data terhapus
     if ($stmt->affected_rows > 0) {
 
         echo json_encode([
