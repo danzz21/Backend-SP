@@ -10,14 +10,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit();
 }
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $conn = mysqli_connect(
-    "yamabiko.proxy.rlwy.net",
-    "root",
-    "DEmUxauDcCpXBIQJNOIQCCkVfxBuKJhb",
-    "railway",
-    14076
+    $_ENV['MYSQLHOST'],
+    $_ENV['MYSQLUSER'],
+    $_ENV['MYSQLPASSWORD'],
+    $_ENV['MYSQLDATABASE'],
+    $_ENV['MYSQLPORT']
 );
 
 if (!$conn) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
+
+echo "Koneksi berhasil";
