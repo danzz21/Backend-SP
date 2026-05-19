@@ -1,13 +1,13 @@
 <?php
 
-$conn = mysqli_connect(
-    $_ENV['MYSQLHOST'],
-    $_ENV['MYSQLUSER'],
-    $_ENV['MYSQLPASSWORD'],
-    $_ENV['MYSQLDATABASE'],
-    $_ENV['MYSQLPORT']
-);
+$host = $_ENV['MYSQLHOST'];
+$user = $_ENV['MYSQLUSER'];
+$pass = $_ENV['MYSQLPASSWORD'];
+$db   = $_ENV['MYSQLDATABASE'];
+$port = $_ENV['MYSQLPORT'];
+
+$conn = mysqli_connect($host, $user, $pass, $db, $port);
 
 if (!$conn) {
-    die("Koneksi gagal");
+    die("Koneksi gagal: " . mysqli_connect_error());
 }
