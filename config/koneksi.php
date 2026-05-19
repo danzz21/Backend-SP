@@ -1,13 +1,16 @@
 <?php
 
-$host = $_ENV['MYSQLHOST'];
-$user = $_ENV['MYSQLUSER'];
-$pass = $_ENV['MYSQLPASSWORD'];
-$db   = $_ENV['MYSQLDATABASE'];
-$port = $_ENV['MYSQLPORT'];
-
-$conn = mysqli_connect($host, $user, $pass, $db, $port);
+$conn = mysqli_connect(
+    "yamabiko.proxy.rlwy.net",
+    "root",
+    "DEmUxauDcCpXBIQJNOIQCCkVfxBuKJhb",
+    "railway",
+    14076
+);
 
 if (!$conn) {
     die("Koneksi gagal: " . mysqli_connect_error());
 }
+header("Access-Control-Allow-Origin: https://emahk.netlify.app");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");

@@ -22,7 +22,7 @@ if (!isset($_SESSION['login'])) {
 
     exit;
 }
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: https://emahk.netlify.app");
 header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Headers: Content-Type");
 
