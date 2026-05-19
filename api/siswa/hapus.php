@@ -23,6 +23,9 @@ if (!isset($_SESSION['login'])) {
     exit;
 }
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
 // ================= METHOD CHECK ================= //
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
@@ -70,7 +73,7 @@ if (!is_numeric($id)) {
 
 // ================= PREPARED STATEMENT ================= //
 $stmt = $conn->prepare("
-    DELETE FROM siswa 
+    DELETE FROM siswa
     WHERE id_siswa = ?
 ");
 

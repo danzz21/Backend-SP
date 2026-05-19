@@ -22,13 +22,16 @@ if (!isset($_SESSION['login'])) {
 
     exit;
 }
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
 
 // ================= DATABASE ================= //
 include "../../config/koneksi.php";
 
 // ================= QUERY ================= //
 $query = mysqli_query($conn, "
-    SELECT 
+    SELECT
         id_siswa,
         nama_siswa,
         kelas

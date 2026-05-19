@@ -22,7 +22,9 @@ if (!isset($_SESSION['login'])) {
 
     exit;
 }
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
 // ================= METHOD CHECK ================= //
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
@@ -126,8 +128,8 @@ if (!preg_match("/^[a-zA-Z\s]+$/", $nama)) {
 
 // ================= CEK DATA SISWA ================= //
 $cekSiswa = $conn->prepare("
-    SELECT id_siswa 
-    FROM siswa 
+    SELECT id_siswa
+    FROM siswa
     WHERE id_siswa = ?
 ");
 

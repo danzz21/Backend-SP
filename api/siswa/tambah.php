@@ -36,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
 // ================= DATABASE ================= //
 include "../../config/koneksi.php";
 
@@ -99,9 +102,9 @@ if (strlen($kelas) > 20) {
 
 // ================= CEK DUPLIKAT ================= //
 $cek = $conn->prepare("
-    SELECT id_siswa 
-    FROM siswa 
-    WHERE nama_siswa = ? 
+    SELECT id_siswa
+    FROM siswa
+    WHERE nama_siswa = ?
     AND kelas = ?
 ");
 

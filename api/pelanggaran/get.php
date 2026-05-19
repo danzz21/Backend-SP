@@ -22,19 +22,21 @@ if (!isset($_SESSION['login'])) {
 
     exit;
 }
-
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Headers: Content-Type");
 // ================= DATABASE ================= //
 include "../../config/koneksi.php";
 
 // ================= QUERY ================= //
 $query = mysqli_query($conn, "
-    SELECT 
+    SELECT
         siswa.id_siswa,
         siswa.nama_siswa,
         siswa.kelas,
         COALESCE(SUM(pelanggaran.poin), 0) as poin
     FROM siswa
-    LEFT JOIN pelanggaran 
+    LEFT JOIN pelanggaran
         ON siswa.id_siswa = pelanggaran.id_siswa
     GROUP BY siswa.id_siswa
 ");

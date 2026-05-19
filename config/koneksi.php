@@ -1,6 +1,13 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "", "e_mahkamah");
+
+$conn = mysqli_connect(
+    $_ENV['MYSQLHOST'],
+    $_ENV['MYSQLUSER'],
+    $_ENV['MYSQLPASSWORD'],
+    $_ENV['MYSQLDATABASE'],
+    $_ENV['MYSQLPORT']
+);
 
 if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+    die("Koneksi gagal");
 }
