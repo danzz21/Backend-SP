@@ -13,12 +13,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+$host = getenv('MYSQLHOST');
+$user = getenv('MYSQLUSER');
+$pass = getenv('MYSQLPASSWORD');
+$db   = getenv('MYSQLDATABASE');
+$port = getenv('MYSQLPORT');
+
 $conn = mysqli_connect(
-    $_ENV['MYSQLHOST'],
-    $_ENV['MYSQLUSER'],
-    $_ENV['MYSQLPASSWORD'],
-    $_ENV['MYSQLDATABASE'],
-    $_ENV['MYSQLPORT']
+    $host,
+    $user,
+    $pass,
+    $db,
+    $port
 );
 
 if (!$conn) {
