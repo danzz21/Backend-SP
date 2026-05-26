@@ -16,7 +16,11 @@ $id_siswa = $_POST['id_siswa'] ?? '';
 $jenis    = $_POST['jenis'] ?? '';
 $poin     = $_POST['poin'] ?? '';
 
-if (empty($id_siswa) || empty($jenis) || empty($poin)) {
+if (
+    empty($id_siswa) ||
+    empty($jenis) ||
+    empty($poin)
+) {
 
     echo json_encode([
         "status" => "error",
@@ -40,16 +44,14 @@ $query = mysqli_query($conn, "
 ");
 
 if ($query) {
-
     echo json_encode([
         "status" => "success",
         "message" => "Pelanggaran berhasil ditambahkan"
     ]);
-
 } else {
-
     echo json_encode([
         "status" => "error",
         "message" => mysqli_error($conn)
     ]);
 }
+?>
