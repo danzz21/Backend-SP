@@ -6,7 +6,7 @@ session_start();
 // ================= HEADERS ================= //
 header("Content-Type: application/json");
 
-header("Access-Control-Allow-Origin: https://emakh.netlify.app");
+header("Access-Control-Allow-Origin: *");
 
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 
