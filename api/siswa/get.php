@@ -18,10 +18,18 @@ include "../../config/koneksi.php";
 // ================= QUERY ================= //
 $query = mysqli_query($conn, "
     SELECT
-        id_siswa,
-        nama_siswa,
-        kelas
+        siswa.id_siswa,
+        siswa.nama_siswa,
+        siswa.kelas,
+
+        COALESCE(SUM(pelanggaran.poin), 0) AS total_poin
+
     FROM siswa
+
+    LEFT JOIN pelanggaran
+    ON siswa.id_siswa = pelanggaran.id_siswa
+
+    GROUP BY siswa.id_siswa
 ");
 
 // ================= ERROR QUERY ================= //
